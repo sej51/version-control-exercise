@@ -1,9 +1,9 @@
 # LOCAL DEV (ENV VARS)
 
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-#load_dotenv()
+load_dotenv()
 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default="demo")
 
