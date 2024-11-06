@@ -1,15 +1,19 @@
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv() # looks in the ".env" file for env vars
 
 SENDGRID_SENDER_ADDRESS = os.getenv("SENDGRID_SENDER_ADDRESS")
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
+
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
+# HELPER FUNCTION:
+
 def send_email_with_sendgrid(recipient_address=SENDGRID_SENDER_ADDRESS,
-                             subject="[Shopping Cart App] Testing 123",
+                             subject="Testing 123",
                              html_content="<p>Hello World</p>"
                             ):
     """Sends an email to the given recipient address.
@@ -43,3 +47,10 @@ def send_email_with_sendgrid(recipient_address=SENDGRID_SENDER_ADDRESS,
         print(f"Error sending email:")
         print(type(err))
         print(err)
+
+
+
+
+# SEND EXAMPLE EMAIL:
+
+send_email_with_sendgrid(html_content="Hello. Tuesday Night")
