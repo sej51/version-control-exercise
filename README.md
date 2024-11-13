@@ -45,13 +45,13 @@ python app/my_script.py
 Run the unemployment report:
 
 ```sh
-python app/unemployment.py
+python -m app.unemployment
 ```
 
 Run the stocks report:
 
 ```sh
-python app/stocks.py
+python -m app.stocks
 ```
 
 Run the email service:
