@@ -59,3 +59,12 @@ Run the email service:
 ```sh
 python app/email_service.py
 ```
+
+
+## Testing
+
+Run tests:
+
+```sh
+pytest
+```
