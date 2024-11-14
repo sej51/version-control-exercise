@@ -5,7 +5,7 @@ from plotly.express import line
 
 
 from app.alpha_service import API_KEY
-
+from app.email_service import send_email
 
 
 def fetch_stocks_csv(symbol):
@@ -70,3 +70,11 @@ if __name__ == "__main__":
                 title=f"Stock Prices ({symbol})",
             labels= {"x": "Date", "y": "Stock Price ($)"})
     fig.show()
+
+    #Email
+    send_email(
+        sender_address="sjolly03@gmail.com",
+        recipient_address="sjolly03@gmail.com",
+        subject=f"Stock Report Update for {symbol}",
+        html_content=f"<p>Average Price over the last 100 days: ${recent_df['adjusted_close'].mean()}</p>"
+    )

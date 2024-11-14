@@ -1,56 +1,41 @@
 import os
-from dotenv import load_dotenv
 
-load_dotenv() # looks in the ".env" file for env vars
+from dotenv import load_dotenv
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
+load_dotenv()
 
 SENDGRID_SENDER_ADDRESS = os.getenv("SENDGRID_SENDER_ADDRESS")
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
+def send_email(sender_address, recipient_address, subject, html_content):
+    """
+    Sends an email to the given recipient address.
 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-
-# HELPER FUNCTION:
-
-def send_email_with_sendgrid(recipient_address=SENDGRID_SENDER_ADDRESS,
-                             subject="Testing 123",
-                             html_content="<p>Hello World</p>"
-                            ):
-    """Sends an email to the given recipient address.
-
-        Params:
-            recipient_address (str): The email address of the recipient.
-
-            subject (str): The subject of the email.
-
-            html_content (str): The content of the email. Can pass a string formatted as HTML.
+    Params:
+        sender_address (str): The email address of the sender.
+        recipient_address (str): The email address of the recipient.
+        subject (str): The subject of the email.
+        html_content (str): The HTML content of the email.
     """
     print("SENDING EMAIL TO:", recipient_address)
     print("SUBJECT:", subject)
     print("HTML:", html_content)
 
     client = SendGridAPIClient(SENDGRID_API_KEY)
-    print("CLIENT:", type(client))
-
-    # always send from the sender, but allow us to customize the recipient by passing it in to the function as a parameter
-    message = Mail(from_email=SENDGRID_SENDER_ADDRESS, to_emails=recipient_address, subject=subject, html_content=html_content)
+    message = Mail(from_email=sender_address, to_emails=recipient_address, subject=subject, html_content=html_content)
 
     try:
         response = client.send(message)
-
-        print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
-        print(response.status_code) #> 202 indicates SUCCESS
-        #print(response.body)
-        #print(response.headers)
-        print("Email sent successfully!")
+        print("Email sent successfully! Status code:", response.status_code)
     except Exception as err:
-        print(f"Error sending email:")
-        print(type(err))
-        print(err)
+        print(f"Error sending email: {err}")
 
-
-
-
-# SEND EXAMPLE EMAIL:
-
-send_email_with_sendgrid(html_content="Hello. Tuesday Night")
+if __name__ == "__main__":
+    send_email(
+        sender_address=SENDGRID_SENDER_ADDRESS,
+        recipient_address="sjolly03@gmail.com",
+        subject="Test",
+        html_content="<p>This is a test.</p>"
+    )

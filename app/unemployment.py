@@ -8,6 +8,7 @@ import requests
 from plotly.express import line
 
 from app.alpha_service import API_KEY
+from app.email_service import send_email
 
 def fetch_unemployment_json():
 
@@ -81,3 +82,14 @@ if __name__ == "__main__":
 
     fig = line(x=dates, y=rates, title="United States Unemployment Rate over time", labels= {"x": "Month", "y": "Unemployment Rate"})
     fig.show()
+
+    # Email
+    latest_rate = data[0]["value"]
+    latest_date = data[0]["date"]
+
+    send_email(
+        sender_address="sjolly03@gmail.com",
+        recipient_address="sjolly03@gmail.com",
+        subject="Unemployment Report Update",
+        html_content=f"<p>Latest Unemployment Rate: {latest_rate}% as of {latest_date}</p>"
+    )
