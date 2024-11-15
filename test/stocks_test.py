@@ -1,6 +1,7 @@
 from pandas import DataFrame
 
 from app.stocks import fetch_stocks_csv
+from app.stocks import fetch_stocks_csv, format_usd
 
 def test_stock_data_fetching():
 
@@ -12,3 +13,8 @@ def test_stock_data_fetching():
     earliest = df.iloc[-1]
     assert earliest["timestamp"] == '2018-04-03'
     assert earliest["adjusted_close"] == 149.01
+
+def test_usd_formatting():
+    assert format_usd(3.5) == "$3.50"
+    assert format_usd(0.44444) == "$0.44"
+    assert format_usd(123456789) == "$123,456,789.00"
