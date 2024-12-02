@@ -11,4 +11,6 @@ sendgrid
 
 pytest
 
+flask
+
 gunicorn
