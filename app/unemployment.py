@@ -10,6 +10,9 @@ from plotly.express import line
 from app.alpha_service import API_KEY
 from app.email_service import send_email
 
+def format_pct(my_value):
+    return f"{float(my_value):,.2f}%"
+
 def fetch_unemployment_json():
 
     request_url = f"https://www.alphavantage.co/query?function=UNEMPLOYMENT&apikey={API_KEY}"
