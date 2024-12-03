@@ -1,0 +1,26 @@
+{% extends "bootstrap_5.html" %}
+{% set active_page = "products" %}
+{% block content %}
+<h1>Non-Alcoholic Drinks</h1>
+<p class="lead">Explore some refreshing non-alcoholic drink options:</p>
+
+{% if products|length > 0 %}
+<div class="container">
+    <div class="row">
+        {% for product in products[:20] %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ product.strDrinkThumb }}" class="card-img-top" alt="{{ product.strDrink }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.strDrink }}</h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<p>Oops, no products found.</p>
+{% endif %}
+
+{% endblock %}
